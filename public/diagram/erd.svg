@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" font-family="Arial, sans-serif">
+    <defs>
+        <style>
+            .table { fill: #fff; stroke: #d7d7db; stroke-width: 2; }
+            .title { fill: #ed5087; font-size: 16px; font-weight: bold; }
+            .field { font-size: 13px; fill: #1d1d1f; }
+            .link { stroke: #b3b3b3; stroke-width: 2; marker-end: url(#arrow); }
+        </style>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#b3b3b3"/>
+        </marker>
+    </defs>
+    <rect class="table" x="40" y="40" width="220" height="170" rx="10"/>
+    <text class="title" x="60" y="65">users</text>
+    <text class="field" x="60" y="90">id (PK)</text>
+    <text class="field" x="60" y="110">login (unique)</text>
+    <text class="field" x="60" y="130">full_name</text>
+    <text class="field" x="60" y="150">phone</text>
+    <text class="field" x="60" y="170">email</text>
+    <text class="field" x="60" y="190">role</text>
+
+    <rect class="table" x="330" y="40" width="220" height="170" rx="10"/>
+    <text class="title" x="350" y="65">categories</text>
+    <text class="field" x="350" y="90">id (PK)</text>
+    <text class="field" x="350" y="110">name</text>
+    <text class="field" x="350" y="130">slug (unique)</text>
+    <text class="field" x="350" y="150">description</text>
+
+    <rect class="table" x="620" y="40" width="240" height="220" rx="10"/>
+    <text class="title" x="640" y="65">products</text>
+    <text class="field" x="640" y="90">id (PK)</text>
+    <text class="field" x="640" y="110">category_id (FK)</text>
+    <text class="field" x="640" y="130">name / slug</text>
+    <text class="field" x="640" y="150">supplier_country</text>
+    <text class="field" x="640" y="170">color</text>
+    <text class="field" x="640" y="190">stock / price</text>
+
+    <rect class="table" x="40" y="260" width="220" height="180" rx="10"/>
+    <text class="title" x="60" y="285">cart_items</text>
+    <text class="field" x="60" y="310">id (PK)</text>
+    <text class="field" x="60" y="330">user_id (FK)</text>
+    <text class="field" x="60" y="350">product_id (FK)</text>
+    <text class="field" x="60" y="370">quantity</text>
+
+    <rect class="table" x="330" y="260" width="220" height="220" rx="10"/>
+    <text class="title" x="350" y="285">orders</text>
+    <text class="field" x="350" y="310">id (PK)</text>
+    <text class="field" x="350" y="330">user_id (FK)</text>
+    <text class="field" x="350" y="350">contact_name / phone</text>
+    <text class="field" x="350" y="370">address</text>
+    <text class="field" x="350" y="390">preferred_date/time</text>
+    <text class="field" x="350" y="410">payment_method</text>
+    <text class="field" x="350" y="430">status / total_price</text>
+
+    <rect class="table" x="620" y="290" width="240" height="190" rx="10"/>
+    <text class="title" x="640" y="315">order_items</text>
+    <text class="field" x="640" y="340">id (PK)</text>
+    <text class="field" x="640" y="360">order_id (FK)</text>
+    <text class="field" x="640" y="380">product_id (FK)</text>
+    <text class="field" x="640" y="400">quantity</text>
+    <text class="field" x="640" y="420">unit_price</text>
+
+    <line class="link" x1="260" y1="110" x2="330" y2="110"/>
+    <line class="link" x1="550" y1="130" x2="620" y2="130"/>
+    <line class="link" x1="150" y1="210" x2="150" y2="260"/>
+    <line class="link" x1="260" y1="350" x2="330" y2="350"/>
+    <line class="link" x1="550" y1="380" x2="620" y2="380"/>
+    <line class="link" x1="740" y1="260" x2="740" y2="290"/>
+</svg>
