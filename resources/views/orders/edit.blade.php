@@ -18,10 +18,11 @@
 
 <form
   method="post"
-  action="{{ route('orders.store') }}"
+  action="{{ route('orders.update', $order->id) }}"
   enctype="multipart/form-data" 
 >
   @csrf
+  @method('PUT')
 
   <div class="mb-4 d-flex flex-wrap gap-3 justify-content-between">
     <div class="d-flex gap-2 align-items-center">
@@ -30,7 +31,8 @@
       <select class="form-select" name="client_id">
 
       @foreach ($clients as $client)
-        <option value="{{ $client->id }}">{{ $client->full_name }}</option>
+        <option {{ $order->client->id === $client->id ? 'selected' : null }}   
+          value="{{ $client->id }}">{{ $client->full_name }}</option>
       @endforeach
 
       </select>
@@ -48,6 +50,8 @@
     </div>
   </div>
 
+  @foreach ($order->items as $item)
+
   <div class="card mb-3">
     <div class="card-body">
       <div class="row">    
@@ -58,7 +62,8 @@
             <select class="form-select" name="items[0][product_id]">
 
             @foreach ($products as $product)
-              <option value="{{ $product->id }}">{{ $product->title }}</option>
+              <option {{ $item->product_id === $product->id ? 'selected' : null }} 
+                value="{{ $product->id }}">{{ $product->title }}</option>
             @endforeach
 
             </select>
@@ -74,6 +79,7 @@
               min="1" 
               name="items[0][quantity]" 
               class="form-control" 
+              value="{{ $item->quantity }}"  
             />
           </div>
         </div>
@@ -88,6 +94,7 @@
               max="100" 
               name="items[0][discount]" 
               class="form-control" 
+              value="{{ $item->discount }}" 
             />
           </div>
         </div>
@@ -102,6 +109,8 @@
       </div>
     </div>
   </div>
+
+  @endforeach
 </form>
 
 @else
@@ -114,6 +123,13 @@
 
 <script>
   const $container = $('form')
+
+  $container.on('submit', function(e) {
+    e.preventDefault()
+    reindexCards()
+
+    this.submit()
+  })
 
   $container.on('click', '#add-item-btn', function(e) {
     e.preventDefault()
@@ -133,6 +149,10 @@
 
   $container.on('click', '.delete-item-btn', function(e) {
     e.preventDefault()
+
+    const $allCards = $('.card')
+    if ($allCards.length < 2)
+      return;
 
     const $card = $(this).closest('.card')
 

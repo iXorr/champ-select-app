@@ -54,11 +54,9 @@ class ClientController extends Controller
 
     public function destroy(Client $client)
     {
-        // if ($client->orderItems->isNotEmpty()) {
-        //     dd('not skipped');
-        // }
-
-        // dd('skipped');
+        if ($client->orders->isNotEmpty())
+            return back()
+                ->withErrors(['Клиент участвует в заказах']);
 
         $client->delete();
         

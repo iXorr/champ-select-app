@@ -68,11 +68,9 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        // if ($product->orderItems->isNotEmpty()) {
-        //     dd('not skipped');
-        // }
-
-        // dd('skipped');
+        if ($product->orders->isNotEmpty())
+            return back()
+                ->withErrors(['Продукт участвует в заказах']);
 
         $product->delete();
         

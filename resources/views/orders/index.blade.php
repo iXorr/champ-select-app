@@ -1,9 +1,9 @@
 @extends('layout')
-@props(['orders', 'users', 'orders'])
+@props(['orders', 'users', 'clients'])
 
 @section('content')
 
-<div class="mb-2 d-flex flex-wrap gap-3 justify-content-between">
+<div class="mb-3 d-flex flex-wrap gap-3 justify-content-between">
   <h4 class="mb-0">Заказы</h4>
 
   <a 
@@ -14,116 +14,77 @@
   </a>
 </div>
 
-<div class="mb-4">
-  /* Тут будет фильтрация */
-</div>
-
 @if($orders->isNotEmpty())
 
-<div class="overflow-auto">
-  <table class="table align-middle">
-    <thead>
-      <tr>
-        <th scope="col">Номер</th>
-        <th scope="col">Клиент</th>
-        <th scope="col">Пользователь-создатель</th>
-        <th scope="col">Общая сумма</th>
-        <th scope="col">Статус</th>
-        <th scope="col">Дата создания</th>
-        <th scope="col">Дата отгрузки</th>
-        <th></th>
-      </tr>
-    </thead>
+<form 
+  method="post"
+  action="/orders/filter"
+  enctype="multipart/form-data" 
+  class="mb-4" 
+  id="filter-form" 
+>
+  @csrf
+
+  <div class="row">
+    <div class="col-lg-2">
+      <label class="mb-2">По статусу</label>
+ 
+      <select class="form-select" name="status">
+        <option value="" selected></option>
+        <option value="Новый">Новый</option>
+        <option value="Отгружен">Отгружен</option>
+        <option value="Доставка">Доставка</option>
+        <option value="Выдан">Выдан</option>
+        <option value="Отменен">Отменен</option>
+      </select>
+    </div>
+
+    <div class="col-lg-2">
+      <label class="mb-2">По пользователю</label>
+
+      <select class="form-select" name="user_id">
+        <option value="" selected></option>
+        @foreach ($users as $user)
+          <option value="{{ $user->id }}">{{ $user->full_name }}</option>
+        @endforeach
+      </select>
+    </div>
     
-    <tbody>
-      @foreach($orders as $order)
+    <div class="col-lg-2">
+      <label class="mb-2">По клиенту</label>
 
-      <tr>
-        <td>{{ $order->id }}</th>
-        <td>{{ $order->client->full_name }}</td>
-        <td>{{ $order->user->full_name }}</td>
-        <td>{{ $order->total_sum }}</td>
+      <select class="form-select" name="client_id">
+        <option value="" selected></option>
+        @foreach ($clients as $client)
+          <option value="{{ $client->id }}">{{ $client->full_name }}</option>
+        @endforeach
+      </select>
+    </div>
+    
+    <div class="col-lg-2">
+      <label class="mb-2">По дате создания</label>
 
-        <td>
-          <form 
-            method="post"
-            action="/orders/update-status/{{ $order->id }}"
-            enctype="multipart/form-data" 
-            class="update-status-form" 
-          >
-            @csrf
+      <input 
+        class="form-control" 
+        type="date" 
+        name="created_at" 
+      />
+    </div>
+    
+    <div class="col-lg-2">
+      <label class="mb-2">По дате отгрузки</label>
 
-            <select class="form-select" name="status">
-              <option 
-                value="Новый" 
-                {{ $order->status === 'Новый' ? 'selected' : null }}
-              >
-                Новый
-              </option>
-              
-              <option 
-                value="Отгрузка" 
-                {{ $order->status === 'Отгрузка' ? 'selected' : null }}
-              >
-                Отгрузка
-              </option>
+      <input 
+        class="form-control" 
+        type="date" 
+        name="shipped_at" 
+      />
+    </div>
+  </div>
+</form>
 
-              <option 
-                value="Доставка" 
-                {{ $order->status === 'Доставка' ? 'selected' : null }}
-              >
-                Доставка
-              </option>
-
-              <option 
-                value="Выдан" 
-                {{ $order->status === 'Выдан' ? 'selected' : null }}
-              >
-                Выдан
-              </option>
-
-              <option 
-                value="Отменен" 
-                {{ $order->status === 'Отменен' ? 'selected' : null }}
-              >
-                Отменен
-              </option>
-            </select>
-          </form>
-        </td>
-
-        <td>{{ $order->created_at }}</td>
-        <td>{{ $order->shipped_at ? $order->shipped_at : '-' }}</td>
-
-        <td class="d-flex gap-2">
-          <a 
-            href="{{ route('orders.edit', $order->id) }}" 
-            class="btn btn-outline-secondary" 
-          >
-            Изменить
-          </a>
-
-          <form
-            method="post"
-            action="{{ route('orders.destroy', $order->id) }}"
-            enctype="multipart/form-data"
-          >
-            @csrf
-            @method('DELETE')
-
-            <button 
-              type="submit" 
-              class="btn btn-outline-danger" 
-            >
-              Удалить
-            </button>
-          </form>
-        </td>
-      </tr>
-
-      @endforeach
-    </tbody>
-  </table>
+<div id="orders-table-wrapper">
+  @include('orders.partials.table', ['orders' => $orders])
 </div>
 
 @else
@@ -135,15 +96,38 @@
 @endif
 
 <script>
-  const $updateStatusForms = $('.update-status-form')
+  $(function() {
+    $(document).on('change', '.update-status-form', function() {
+      $(this).submit()
+    })
 
-  if ($updateStatusForms) {
-    $updateStatusForms.each(function() {
-      $(this).on('change', function() {
-        this.submit()
+    const $filterForm = $('#filter-form')
+    const $wrapper = $('#orders-table-wrapper')
+
+    let xhr = null
+
+    $filterForm.on('change', 'select, input', function() {
+      xhr = $.ajax({
+        url: $filterForm.attr('action'),
+        method: 'POST',
+        data: $filterForm.serialize(),
+
+        beforeSend() {
+          $wrapper.fadeTo(200, 1)
+        },
+
+        success(html) {
+          $wrapper.fadeOut(200, function() {
+            $wrapper.html(html).fadeIn(200)
+          })
+        },
+
+        error() {
+          alert('Ошибка загрузки')
+        }
       })
     })
-  }
+  })
 </script>
 
 @endsection

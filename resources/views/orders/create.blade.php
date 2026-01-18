@@ -115,6 +115,13 @@
 <script>
   const $container = $('form')
 
+  $container.on('submit', function(e) {
+    e.preventDefault()
+    reindexCards()
+
+    this.submit()
+  })
+
   $container.on('click', '#add-item-btn', function(e) {
     e.preventDefault()
 
@@ -133,6 +140,10 @@
 
   $container.on('click', '.delete-item-btn', function(e) {
     e.preventDefault()
+    
+    const $allCards = $('.card')
+    if ($allCards.length < 2)
+      return;
 
     const $card = $(this).closest('.card')
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,7 @@ Route::get('login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth')->group(function() {
-  Route::view('/', 'dashboard');
+  Route::get('/', DashboardController::class);
 
   Route::post('change-password', [AuthController::class, 'changePassword']);
   Route::get('profile', [AuthController::class, 'showProfile']);
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function() {
 
   Route::resource('orders', OrderController::class);
   Route::post('orders/update-status/{order}', [OrderController::class, 'updateStatus']);
+  Route::post('orders/filter', [OrderController::class, 'filter']);
 
   Route::middleware('can:admin')->group(function() {
     Route::resource('users', UserController::class);

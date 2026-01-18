@@ -17,8 +17,8 @@ class Client extends Model
         'note'
     ];
 
-    public function orderItems()
+    public function orders()
     {
-        return $this->hasManyThrough(OrderItem::class, Order::class);
+        return $this->hasMany(Order::class);
     }
 }

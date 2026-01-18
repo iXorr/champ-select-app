@@ -15,23 +15,6 @@ use App\Http\Requests\ChangeOrderStatusRequest;
 
 class OrderController extends Controller
 {
-    public function index()
-    {
-        return view('orders.index', [
-            'orders' => Order::all(),
-            'users' => User::all(),
-            'clients' => Client::all()
-        ]);
-    }
-
-    public function create()
-    {
-        return view('orders.create', [
-            'clients' => Client::all(),
-            'products' => Product::all()
-        ]);
-    }
-
     private function syncItems(Order $order, array $items)
     {
         $order->items()->delete();
@@ -41,8 +24,8 @@ class OrderController extends Controller
         foreach ($items as $item) {
             $product = Product::find($item['product_id']);
 
-            $sum = $item['quantity'] * $product->id;
-            $calcSum = $sum - ($sum / 100 * $item['discount']);
+            $sum = (int)($item['quantity'] * $product->price);
+            $calcSum = (int)($sum - ($sum / 100 * $item['discount'] ?? 0));
 
             $totalSum += $calcSum;
 
@@ -54,6 +37,49 @@ class OrderController extends Controller
         }
 
         return $totalSum;
+    }
+
+    public function index()
+    {
+        return view('orders.index', [
+            'orders' => Order::all(),
+            'users' => User::all(),
+            'clients' => Client::all()
+        ]);
+    }
+
+    public function filter(Request $request)
+    {
+        $orders = Order::query();
+
+        if ($request->input('status'))
+            $orders->where('status', $request->input('status'));
+        
+        if ($request->input('user_id'))
+            $orders->where('user_id', $request->input('user_id'));
+        
+        if ($request->input('client_id'))
+            $orders->where('client_id', $request->input('client_id'));
+        
+        if ($request->input('created_at'))
+            $orders->whereDate('created_at', $request->input('created_at'));
+
+        if ($request->input('shipped_at'))
+            $orders->whereDate('shipped_at', $request->input('shipped_at'));
+
+        $orders = $orders->get();
+
+        return view('orders.partials.table', [
+            'orders' => $orders
+        ]);
+    }
+
+    public function create()
+    {
+        return view('orders.create', [
+            'clients' => Client::all(),
+            'products' => Product::all()
+        ]);
     }
 
     public function store(OrderRequest $request)
@@ -77,8 +103,14 @@ class OrderController extends Controller
 
     public function edit(Order $order)
     {
+        if ($order->status !== 'Новый')
+            return back()
+                ->withErrors(['Менять можно только новые заказы']);
+
         return view('orders.edit', [
-            'order' => $order
+            'order' => $order,
+            'clients' => Client::all(),
+            'products' => Product::all()
         ]);
     }
 
@@ -98,6 +130,9 @@ class OrderController extends Controller
             return back()
                 ->withErrors(['message' => 'Статусы нельзя менять в обратном направлении']);
 
+        if ($data['status'] === 'Отгрузка')
+            $data['shipped_at'] = now();
+
         $order->update($data);
         
         return redirect()
@@ -107,13 +142,18 @@ class OrderController extends Controller
 
     public function update(OrderRequest $request, Order $order)
     {
-        // $data = $request->validated();
+        if ($order->status !== 'Новый')
+            return back()
+                ->withErrors(['Менять можно только новые заказы']);
 
-        // $order->update($data);
+        $data = $request->validated();
 
-        // return redirect()
-        //     ->route('orders.index')
-        //     ->with('message', 'Заказ изменён');
+        $data['total_sum'] = $this->syncItems($order, $data['items']);        
+        $order->update($data);
+
+        return redirect()
+            ->route('orders.index')
+            ->with('message', 'Заказ изменён');
     }
 
     public function destroy(Order $order)
@@ -122,6 +162,6 @@ class OrderController extends Controller
         
         return redirect()
             ->route('orders.index')
-            ->with('message', 'Заказ удалён');
+            ->with('message', 'Заказ удалён (но остаётся в БД)');
     }
 }
