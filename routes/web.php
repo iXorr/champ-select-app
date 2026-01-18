@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +29,16 @@ Route::middleware('auth')->group(function() {
   Route::get('profile', [AuthController::class, 'showProfile']);
   Route::get('logout', [AuthController::class, 'logout']);
 
+  Route::resource('clients', ClientController::class);
+  Route::post('clients/import', [ClientController::class, 'import']);
+
+  Route::resource('orders', OrderController::class);
+  Route::post('orders/update-status/{order}', [OrderController::class, 'updateStatus']);
+
   Route::middleware('can:admin')->group(function() {
     Route::resource('users', UserController::class);
+      
+    Route::resource('products', ProductController::class);
+    Route::post('products/import', [ProductController::class, 'import']);
   });
 });

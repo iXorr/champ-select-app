@@ -1,9 +1,10 @@
 @extends('layout')
+@props(['user'])
 
 @section('content')
 
 <div class="mb-3 d-flex flex-wrap gap-3 justify-content-between">
-  <h4 class="mb-0">Создание пользователя</h4>
+  <h4 class="mb-0">Редактирование пользователя | #{{ $user->id }}</h4>
 
   <a 
     href="{{ route('users.index') }}" 
@@ -15,10 +16,11 @@
 
 <form
   method="post"
-  action="{{ route('users.store') }}"
+  action="{{ route('users.update', $user->id) }}"
   enctype="multipart/form-data" 
 >
   @csrf
+  @method('PUT')
 
   <div class="row">
     <div class="col-lg-6">
@@ -29,7 +31,7 @@
           type="text" 
           name="full_name" 
           class="form-control" 
-          value="{{ old('full_name') }}" 
+          value="{{ $user->full_name }}" 
         />
       </div>
     </div>
@@ -42,7 +44,7 @@
           type="text" 
           name="login" 
           class="form-control" 
-          value="{{ old('login') }}"  
+          value="{{ $user->login }}"  
         />
       </div>
     </div>
@@ -55,7 +57,7 @@
           type="text" 
           name="email" 
           class="form-control" 
-          value="{{ old('email') }}"  
+          value="{{ $user->email }}"  
         />
       </div>
     </div>
@@ -67,12 +69,14 @@
         <select class="form-select" name="role">
           <option 
             value="manager" 
+            {{ $user->role === 'manager' ? 'selected' : null }} 
           >
             Менеджер
           </option>
 
           <option 
             value="admin" 
+            {{ $user->role === 'admin' ? 'selected' : null }} 
           >
             Администратор
           </option>

@@ -5,18 +5,12 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UserRequest extends FormRequest
+class ClientRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
             'full_name' => ['required', 'string', 'regex:/\\S+\\s\\S+/'],
-
-            'login' => [
-                'required',
-                'string',
-                Rule::unique('users', 'login')->ignore($this->route('user'))
-            ],
             
             'email' => [
                 'required',
@@ -25,14 +19,9 @@ class UserRequest extends FormRequest
                 Rule::unique('users', 'login')->ignore($this->route('user'))
             ],
             
-            'role' => ['required', 'string'],
-
-            'password' => [
-                $this->isMethod('post') ? 'required' : 'sometimes', 
-                'nullable',
-                'confirmed',
-                'min:6'
-            ],
+            'address' => ['required', 'string'],
+            'phone' => ['required', 'string', 'regex:/\\+7\\d{10}/'],
+            'note' => ['nullable'],
         ];
     }
 }

@@ -3,10 +3,10 @@
 @section('content')
 
 <div class="mb-3 d-flex flex-wrap gap-3 justify-content-between">
-  <h4 class="mb-0">Создание пользователя</h4>
+  <h4 class="mb-0">Создание клиента</h4>
 
   <a 
-    href="{{ route('users.index') }}" 
+    href="{{ route('clients.index') }}" 
     class="btn btn-outline-primary" 
   >
     Назад
@@ -15,7 +15,7 @@
 
 <form
   method="post"
-  action="{{ route('users.store') }}"
+  action="{{ route('clients.store') }}"
   enctype="multipart/form-data" 
 >
   @csrf
@@ -36,19 +36,6 @@
 
     <div class="col-lg-6">
       <div class="mb-3">
-        <label class="form-label">Логин</label>
-    
-        <input 
-          type="text" 
-          name="login" 
-          class="form-control" 
-          value="{{ old('login') }}"  
-        />
-      </div>
-    </div>
-
-    <div class="col-lg-6">
-      <div class="mb-3">
         <label class="form-label">Email</label>
     
         <input 
@@ -62,52 +49,45 @@
 
     <div class="col-lg-6">
       <div class="mb-3">
-        <label class="form-label">Тип аккаунта</label>
-    
-        <select class="form-select" name="role">
-          <option 
-            value="manager" 
-          >
-            Менеджер
-          </option>
-
-          <option 
-            value="admin" 
-          >
-            Администратор
-          </option>
-        </select>
-      </div>
-    </div>
-      
-    <div class="col-lg-6">
-      <div class="mb-3">
-        <label class="form-label">Пароль</label>
+        <label class="form-label">Адрес доставки</label>
     
         <input 
-          type="password" 
-          name="password" 
+          type="text" 
+          name="address" 
           class="form-control" 
+          value="{{ old('address') }}"  
         />
       </div>
     </div>
     
     <div class="col-lg-6">
       <div class="mb-3">
-        <label class="form-label">Подтверждение пароля</label>
+        <label class="form-label">Контактный номер</label>
     
         <input 
-          type="password" 
-          name="password_confirmation" 
+          type="text" 
+          name="phone" 
           class="form-control" 
+          value="{{ old('phone') }}"  
         />
       </div>
     </div>
 
     <div class="col-lg-6">
-      <button type="submit" class="btn btn-primary">Отправить</button>
+      <div class="mb-3">
+        <label class="form-label">Пометка</label>
+    
+        <input 
+          type="text" 
+          name="note" 
+          class="form-control" 
+          value="{{ old('note') }}"  
+        />
+      </div>
     </div>
   </div>
+
+  <button type="submit" class="btn btn-primary">Отправить</button>
 </form>
 
 @endsection

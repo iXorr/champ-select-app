@@ -16,9 +16,21 @@
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           @can('admin')
             <li class="nav-item">
+              <a class="nav-link" href="/products">Товары</a>
+            </li>
+            
+            <li class="nav-item">
               <a class="nav-link" href="/users">Пользователи</a>
             </li>
           @endcan
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/clients">Клиенты</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/orders">Заказы</a>
+          </li>
 
           <li class="nav-item">
             <a class="nav-link" href="/profile">Профиль</a>

@@ -17,7 +17,7 @@
 @if($users->isNotEmpty())
 
 <div class="overflow-auto">
-  <table class="table">
+  <table class="table align-middle text-truncate">
     <thead>
       <tr>
         <th scope="col">ФИО</th>
