@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +16,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
+
+Route::middleware('auth')->group(function() {
+  Route::view('/', 'dashboard');
+
+  Route::post('change-password', [AuthController::class, 'changePassword']);
+  Route::get('profile', [AuthController::class, 'showProfile']);
+  Route::get('logout', [AuthController::class, 'logout']);
+
+  Route::middleware('can:admin')->group(function() {
+    Route::resource('users', UserController::class);
+  });
 });
