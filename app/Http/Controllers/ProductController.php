@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
+use App\Models\ProductFeature;
 
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ImportCsvRequest;
@@ -14,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         return view('products.index', [
-            'products' => Product::all()
+            'products' => Product::with('features')->get()
         ]);
     }
 
@@ -42,6 +43,13 @@ class ProductController extends Controller
         $data['image_path'] = $this->storeImage($request);
 
         $product = Product::create($data);
+
+        if ($data['features']) {
+            foreach ($data['features'] as $feature) {
+                $feature['product_id'] = $product->id;
+                ProductFeature::create($feature);
+            }
+        }
         
         return redirect()
             ->route('products.index')
@@ -58,6 +66,9 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product)
     {
         $data = $request->validated();
+        
+        $data['title'] = $product->title;
+        $data['unit'] = $product->unit;
 
         $product->update($data);
 

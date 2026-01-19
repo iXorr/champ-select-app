@@ -2,7 +2,12 @@
 
 <nav class="navbar navbar-light px-2 rounded shadow">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Кофеманы</a>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+      <img src="{{ asset('images/logo.svg') }}" alt="logo" width="24rem;">
+      <span>
+        Кофеманы
+      </span>
+    </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

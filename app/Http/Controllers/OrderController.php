@@ -52,25 +52,23 @@ class OrderController extends Controller
     {
         $orders = Order::query();
 
-        if ($request->input('status'))
-            $orders->where('status', $request->input('status'));
+        if ($request->status)
+            $orders = $orders->where('status', $request->status);
         
-        if ($request->input('user_id'))
-            $orders->where('user_id', $request->input('user_id'));
+        if ($request->user_id)
+            $orders = $orders->where('user_id', $request->user_id);
         
-        if ($request->input('client_id'))
-            $orders->where('client_id', $request->input('client_id'));
+        if ($request->client_id)
+            $orders = $orders->where('client_id', $request->client_id);
         
-        if ($request->input('created_at'))
-            $orders->whereDate('created_at', $request->input('created_at'));
+        if ($request->created_at)
+            $orders = $orders->whereDate('created_at', $request->created_at);
+        
+        if ($request->shipped_at)
+            $orders = $orders->whereDate('shipped_at', $request->shipped_at);
 
-        if ($request->input('shipped_at'))
-            $orders->whereDate('shipped_at', $request->input('shipped_at'));
-
-        $orders = $orders->get();
-
-        return view('orders.partials.table', [
-            'orders' => $orders
+        return view('orders.partials.list', [
+            'orders' => $orders->get()
         ]);
     }
 

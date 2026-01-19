@@ -16,27 +16,26 @@ class DashboardController extends Controller
 
         $orders = Order::whereBetween('created_at', [$from, $to]);
 
-        $totalOrders = (clone $orders)->count();
-        $totalSum = (clone $orders)->sum('total_sum');
+        $ordersAmount = (clone $orders)->get()->count();
+        $ordersTotalSum = (clone $orders)->sum('total_sum');
 
-        $ordersByUser = (clone $orders)
-            ->selectRaw('user_id, count(*) as orders_count')
-            ->groupBy('user_id')
-            ->with('user')
+        $users = User::query()
+            ->withCount([
+                'orders' => function ($q) use ($from, $to) {
+                    $q->whereBetween('created_at', [$from, $to]);                    
+                }  
+            ])
+            ->withSum([
+                'orders' => function ($q) use ($from, $to) {
+                    $q->whereBetween('created_at', [$from, $to]);                    
+                }  
+            ], 'total_sum')
             ->get();
-
-        $sumByUser = (clone $orders)
-            ->selectRaw('user_id, sum(total_sum) as total_sum')
-            ->groupBy('user_id')
-            ->with('user')
-            ->get()
-            ->keyBy('user_id');
-
-        return view('dashboard', compact(
-            'totalOrders',
-            'totalSum',
-            'ordersByUser',
-            'sumByUser'
-        ));
+            
+        return view('dashboard', [
+            'orders_amount' => $ordersAmount,
+            'orders_total_sum' => $ordersTotalSum,
+            'users' => $users
+        ]);
     }
 }

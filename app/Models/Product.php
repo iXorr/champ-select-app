@@ -19,8 +19,16 @@ class Product extends Model
         'description',
     ];
 
+    /**
+     * ВАЖНЫЙ МОМЕНТ - НАДО ЗАПОМНИТЬ!!!
+     */
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_items');
+    }
+
+    public function features()
+    {
+        return $this->hasMany(ProductFeature::class);
     }
 }

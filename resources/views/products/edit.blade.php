@@ -33,6 +33,7 @@
           name="title" 
           class="form-control" 
           value="{{ $product->title }}" 
+          disabled 
         />
       </div>
     </div>
@@ -80,7 +81,7 @@
       <div class="mb-3">
         <label class="form-label">Единица измерения</label>
 
-        <select class="form-select" name="unit">
+        <select class="form-select" name="unit" disabled>
           <option 
             value="шт" 
             {{ $product->unit === 'шт' ? 'selected' : null }} 

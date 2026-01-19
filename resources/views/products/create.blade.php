@@ -19,9 +19,19 @@
   enctype="multipart/form-data" 
 >
   @csrf
+  
+  <div class="d-flex align-items-center gap-3 mb-3">
+    <button
+      class="btn btn-outline-secondary"
+      id="add-feature-btn"  
+    >
+      Добавить доп. характеристику
+    </button>
+    
+    <button type="submit" class="btn btn-primary">Отправить</button>
+  </div>
 
   <div class="row">
-
     <div class="col-lg-6">
       <div class="mb-3">
         <label class="form-label">Наименование</label>
@@ -137,10 +147,85 @@
     
   </div>
 
-  <button type="submit" class="btn btn-primary">Отправить</button>
+  <div class="row mb-4 mt-4 feature">
+    <div class="col-lg-3">
+      <label class="form-label">Название характеристики</label>
+
+      <input 
+        type="text" 
+        name="features[0][title]" 
+        class="form-control" 
+      />
+    </div>
+
+    <div class="col-lg-3">
+      <label class="form-label">Значение характеристики</label>
+
+      <input 
+        type="text" 
+        name="features[0][value]" 
+        class="form-control" 
+      />
+    </div>
+
+    
+    <div class="col-lg-3 d-flex align-items-end">
+      <button class="btn btn-outline-danger delete-feature-btn">
+        Удалить
+      </button>
+    </div>
+  </div>
 </form>
 
 <script>
+  const $container = $('form')
+
+  $container.on('submit', function(e) {
+    e.preventDefault()
+    reindexFeatures()
+
+    this.submit()
+  })
+
+  $(document).on('click', '#add-feature-btn', function(e) {
+    e.preventDefault()
+
+    const $clone = $('.feature').first().clone(true)
+    $clone.hide()
+
+    $clone.find('input').each(function() {
+      this.value = null
+    })
+
+    $container.append($clone)
+    $clone.slideDown(300)
+
+    reindexFeatures()
+  })
+
+  $(document).on('click', '.delete-feature-btn', function(e) {
+    e.preventDefault()
+
+    const $allFeatures = $(document).find('.feature')
+    if ($allFeatures.length < 2)
+      return;
+
+    const $feature = $(this).closest('.feature')
+
+    $feature.slideUp(300, function() {
+      $(this).remove()
+      reindexFeatures()
+    })
+  })
+
+  function reindexFeatures() {
+    $('.feature').each(function(index, card) {
+      $(this).find('input').each(function() {
+        this.name = this.name.replace(/\[\d+\]/, `[${index}]`)
+      })
+    })
+  }
+
   const $textArea = $('textarea').first();
   $textArea.val($textArea.val().trim());
 </script>

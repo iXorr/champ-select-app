@@ -25,6 +25,14 @@ class ProductRequest extends FormRequest
 
             'short_description' => ['required', 'string', 'max:255'],
             'description' => ['required'],
+
+            'features' => [
+                'sometimes',
+                'array'
+            ],
+            
+            'features.*.title' => ['required'],
+            'features.*.value' => ['required'],
         ];
     }
 }

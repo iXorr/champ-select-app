@@ -11,7 +11,7 @@
     <div class="card text-bg-primary">
       <div class="card-body">
         <h6 class="card-title">Всего заказов</h6>
-        <h3 class="mb-0">{{ $totalOrders }}</h3>
+        <h3 class="mb-0">{{ 'here' }}</h3>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
     <div class="card text-bg-success">
       <div class="card-body">
         <h6 class="card-title">Общая сумма</h6>
-        <h3 class="mb-0">{{ number_format($totalSum, 0, '.', ' ') }} рублей</h3>
+        <h3 class="mb-0">{{ 'here' }} рублей</h3>
       </div>
     </div>
   </div>
@@ -37,21 +37,11 @@
         </tr>
       </thead>
       <tbody>
-        @forelse($ordersByUser as $row)
-          <tr>
-            <td>{{ $row->user->full_name }}</td>
-            <td>{{ $row->orders_count }}</td>
-            <td>
-              {{ number_format($sumByUser[$row->user_id]->total_sum ?? 0, 0, '.', ' ') }} рублей
-            </td>
-          </tr>
-        @empty
-          <tr>
-            <td colspan="3" class="text-center text-muted">
-              Нет данных
-            </td>
-          </tr>
-        @endforelse
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
       </tbody>
     </table>
   </div>

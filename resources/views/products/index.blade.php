@@ -82,6 +82,15 @@
           <span>{{ $product->short_description }}</span>
         </p>
 
+        @if($product->features->isNotEmpty())
+          @foreach($product->features as $feature)
+            <p class="card-text text-truncate">
+              <span class="text-muted">{{ $feature->title }}:</span>
+              <span>{{ $feature->value }}</span>
+            </p> 
+          @endforeach
+        @endif
+
         <div class="d-flex gap-2 mt-2">
           <a 
             href="{{ route('products.edit', $product->id) }}" 
