@@ -5,7 +5,7 @@
 ## Техническая информация
 
 Технологии этого модуля: HTML, CSS, JavaScript, PHP. Доступны фреймворки и библиотеки:
-- Laravel 12.x;
+- Laravel 10.x;
 - Vue 3 (включая Vue Router 4);
 - Bootstrap 5.
 
