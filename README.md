@@ -2,7 +2,9 @@
 
 ![PHP](https://img.shields.io/badge/PHP-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)
 ![Laravel](https://img.shields.io/badge/Laravel-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white)
+![Blade](https://img.shields.io/badge/Blade-%23D32F2F.svg?style=for-the-badge&logo=laravel&logoColor=white)
 ![Apache](https://img.shields.io/badge/Apache-%23D22128.svg?style=for-the-badge&logo=apache&logoColor=white)
+![jQuery](https://img.shields.io/badge/jQuery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white)
 
 Привет! Перед тем как приступить к подготовке для чампа (и, особенно, к отбору) по вебу, хочу поделиться с тобой теми вещами, которые я узнал на своём опыте. Не скажу, что это происходило вовремя, но теперь ты будешь готов к тому, что ждёт впереди!
 
