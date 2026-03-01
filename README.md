@@ -1,66 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Краткое описание документа
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Техническое задание: описание того, как должен выглядеть и функционировать сайт.
 
-## About Laravel
+## Техническая информация
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Технологии этого модуля: HTML, CSS, JavaScript, PHP. Доступны фреймворки и библиотеки:
+- Laravel 12.x;
+- Vue 3 (включая Vue Router 4);
+- Bootstrap 5.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Технические пожелания
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Реализуй проект исключительно так, как указано в спецификациях и критериях оценивания. Не используй общепринятые практики (например, представление модели через slug), если они хоть немного усложняют разработку. Сам процесс разработки (на всех этапах) нужно максимально эффективно упростить: это не коммерческий или реальный проект для выхода на production, а учебно-соревновательный. К конкретным техническим пожеланиям можно отнести:
 
-## Learning Laravel
+- По вёрстке: используй Bootstrap. Сведи стилизацию к минимуму или, желательно, полному отсутствию.
+- По серверной части: не пиши тесты, фабрики и другие объекты, от которых нет прямого функционала.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Задание
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Разработать информационную систему для соответствующей предметной области.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+##  Инструкция к выполнению практической части
+Разработайте базу данных с учетом особенностей предметной области информационной системы. В качестве документации к системе разработайте диаграмму базы данных с помощью средств
+графических редакторов. Вам необходимо также разработать адаптивную верстку всех страниц для использования со смартфона с разрешением 412x914px. Материалы для выполнения задания находятся на рабочем столе. Интегрируйте Ваш дизайн в разрабатываемую информационную систему. Предусмотрите анимацию для улучшения пользовательского опыта.
 
-## Laravel Sponsors
+## Предметная область
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Компания "Мир цветов", которая занимается продажей цветов, решила разработать систему заказа цветов для своего сайта по Интернету, чтобы увеличить количество своих клиентов. Вам необходимо разработать базу данных, которая будет содержать весь ассортимент товара компании, а также позволит реализовать систему заказов. Ваше приложение должно быть удобным как для клиентов компании, так и для ее сотрудников. Перед началом использования сайта пользователю необходимо пройти процедуру регистрации. Войдя в систему, клиент может сформировать заявку на доставку цветов, указав свой адрес, контактные данные и конкретный вид товара из списка предоставляемых. Также заказчик может указать желаемую дату и время получения товара, а также предпочтительный тип оплаты (наличными или с помощью банковской карты). Заявки клиентов хранятся в системе. В каждой заявке находятся данные клиента, статус оказания услуги (новая заявка, услуга оказана или услуга отменена). После подачи заявки администратор может подтвердить заявку, поставить отметку о выполнении или отклонить заявку с указанием причины отклонения.
 
-### Premium Partners
+## Основной функционал информационной системы
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Страница "Каталог". На странице по умолчанию представлены все товары, упорядоченные по новизне (от новых добавленных к более старым). Упорядочить товары можно: стране поставщика, по наименованию, по цене. Также товары можно отфильтровать по категориям (цветы, букеты, упаковка). Каждая карточка товара представлена изображением, названием и ценой. При клике на товар открывается отдельная страница товара. Пользователю всегда показывает товары, которые только есть в наличии.
+2. Страница "Товар". Каждая страница содержит фото товара, наименование, цену и характеристики (страна-производитель, вид товара, цвет).
+3. Страница регистрации. На данной странице необходимо предусмотреть добавление пользователя в систему. Пользователю необходимо предоставить возможность ввести уникальный логин, пароль (минимум 6 символов), ФИО (символы кириллицы и пробелы), телефон (в формате +7(XXX)-XXX-XX-XX), адрес электронной почты (формат электронной почты). Все поля обязательны для заполнения. Ошибки валидации должны отображаться на форме. По кнопке «Зарегистрироваться» пользователь должен заноситься в базу, если поля прошли валидацию, а затем перенаправляться в личный кабинет.
+4. Страница авторизации. На данной странице необходимо предусмотреть возможность ввода логина и пароля для зарегистрированных пользователей. Попытки некорректного ввода логина и пароля должны сопровождаться сообщениями.
+5. Личный кабинет клиента. На данной странице клиент может управлять своей корзиной, просматривать и оформлять заказы. Личный кабинет включает:
+    - Формирование корзины. После авторизации у пользователя появляется кнопка "В корзину" на карточках товаров в каталоге, а также на странице самого товара. Каждое нажатие добавляет 1 товар в корзину. Нельзя добавить в корзину больше товаров, чем есть в наличии (выдается сообщение об ошибке без перезагрузки страницы).
+    - Управление корзиной. В корзине можно добавить или убрать единицу каждого товара (учитывая ограничения по количеству в наличии). После чего пользователь может сформировать заказ.
+    - Просмотр заказов. Пользователь может просмотреть список своих заказов (в каждом есть количество товаров) и их статус, упорядоченных от новых к старым. Пользователь также имеет возможность удалить новые заказы.
+    - Оформление заказа. Пользователь указывает: свой адрес, контактные данные (номер телефона в формате +7(XXX)-XXX-XX-XX), желаемую дату и время получения услуги, предпочтительный тип оплаты (наличные или банковская карта). Все поля обязательны для заполнения. Для подтверждения заказа клиент нажимает кнопку "Сформировать заказ" (выдается сообщение).
+6. Кабинет администратора. Доступ в панель администратора осуществляется по логину admin и паролю password. Админ-панель включает в себя:
+    - Просмотр всех заказов. В панели администратора видны все заказы. В списке видны таймстамп заказа, ФИО заказчика, контактные данные и количество заказанных товаров, остальные детали заказа. По умолчанию у всех заказов статус "Новый"
+    - Управление заказом. Администратор может сменить статус заказа на «в работе», «выполнено» или «отменено» (обязательно с указанием причины отмены). имеется возможность фильтрации заказов по статусу: новые, подтвержденные, отмененные.
+    - Управление товарами. Возможность удаления, добавления, редактирования.
